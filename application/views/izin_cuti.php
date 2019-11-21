@@ -123,6 +123,37 @@
 				</form>
 			</div>
 		</div>
+		<div class="module">
+            <div class="module-head">
+                <h3>Riwayat Cuti</h3>
+            </div>
+            <div class="module-body table">
+                <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Tanggal Cuti</th>
+                            <th>Tanggal Masuk</th>
+							<th>Jenis Cuti</th>
+                            <th colspan="2">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $no = 1; foreach ($cuti as $cuti) {?>
+                        <tr class="odd gradeX">
+                            <td><?php echo $no++ ?></td>
+                            <td><?php echo $cuti->nama ?></td>
+                            <td><?php echo $cuti->dari ?></td>
+                            <td><?php echo $cuti->masuk ?></td>
+							<td><?php echo $cuti->jenis ?></td>
+							<td class="text-center"><a class='btn btn-danger btn-xs' href="<?php echo base_url('index.php/izin/deleteCuti/' . $cuti->kd_cuti);?>"><span class="menu-icon icon-trash"></span></a></td>
+						</tr>
+						<?php }?>
+                    </tbody>
+                </table>
+            </div>
+        </div> <!--/.module-->
     </div> <!--/.content-->
 </div> <!--/.span9-->
 </div> <!--/.row-->

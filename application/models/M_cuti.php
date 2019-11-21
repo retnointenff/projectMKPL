@@ -48,4 +48,16 @@ class M_cuti extends CI_Model
     public function addKeluar($data){
         $this->db->insert('keluar', $data);
     }
+    public function deleteCuti($id)
+    {
+        $this->db->delete('cuti', $id);
+    }
+    public function deleteKhusus($id)
+    {
+        $this->db->delete('khusus', $id);
+    }
+    public function deleteKeluar($id)
+    {
+        $this->db->delete('keluar', $id);
+    }
 }

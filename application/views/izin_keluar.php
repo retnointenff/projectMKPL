@@ -91,6 +91,41 @@
 				</form>
 			</div>
 		</div>
+		<div class="module">
+            <div class="module-head">
+                <h3>Riwayat Izin</h3>
+            </div>
+            <div class="module-body table">
+                <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Tanggal Izin</th>
+                            <th>Jenis Izin</th>
+                            <th>Jam Keluar</th>
+                            <th>Jam Kembali</th>
+                            <th>Keterangan</th>
+                            <th colspan="2">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $no = 1;foreach ($keluar as $keluar) { ?>
+                        <tr class="odd gradeX">
+                            <td><?php echo $no++ ?></td>
+                            <td><?php echo $keluar->nama ?></td>
+                            <td><?php echo $keluar->tgl ?></td>
+                            <td><?php echo $keluar->jenis ?></td>
+                            <td><?php echo $keluar->keluar ?></td>
+                            <td><?php echo $keluar->kembali ?></td>
+                            <td><?php echo $keluar->ket ?></td>
+							<td class="text-center"><a class='btn btn-danger btn-xs' href="<?php echo base_url('index.php/izin/deleteKeluar/' . $keluar->kd_keluar); ?>"><span class="menu-icon icon-trash"></span></a></td>
+                        </tr>
+						<?php }?>
+                    </tbody>
+                </table>
+            </div>
+        </div> <!--/.module-->
     </div> <!--/.content-->
 </div> <!--/.span9-->
 </div> <!--/.row-->

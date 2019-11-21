@@ -63,4 +63,30 @@ class Izin extends CI_Controller {
         $this->header();
         $this->load->view('izin_keluar', $data);
     }
+    public function deleteCuti($kd_cuti) {
+        $kd = array('kd_cuti' => $kd_cuti);
+        $this->M_cuti->deleteCuti($kd);
+        
+        $cuti['nik'] = $this->session->userdata('nik');
+
+        $data['cuti'] = $this->M_cuti->getCuti($cuti['nik']);
+        $this->header();
+        $this->load->view('izin_cuti', $data);
+    }
+    public function deleteKhusus($kd_izin) {
+        $kd = array('kd_izin' => $kd_izin);
+        $this->M_cuti->deleteKhusus($kd);
+        $khusus['nik'] = $this->session->userdata('nik');
+        $data['khusus'] = $this->M_cuti->getKhusus($khusus['nik']);
+        $this->header();
+        $this->load->view('izin_khusus', $data);
+    }
+    public function deleteKeluar($kd_keluar) {
+        $kd = array('kd_keluar' => $kd_keluar);
+        $this->M_cuti->deleteKeluar($kd);
+        $keluar['nik'] = $this->session->userdata('nik');
+        $data['keluar'] = $this->M_cuti->getKeluar($keluar['nik']);
+        $this->header();
+        $this->load->view('izin_keluar', $data);
+    }
 }
