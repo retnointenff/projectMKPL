@@ -40,7 +40,8 @@ class Excel_import extends CI_Controller {
 				$data_excel[$i - 1]['pin']    = $sheets['cells'][$i][1];
 				$data_excel[$i - 1]['nik']   = $sheets['cells'][$i][2];
 				$data_excel[$i - 1]['nama'] = $sheets['cells'][$i][3];
-				$data_excel[$i - 1]['tgl'] = date('m/d/Y', $sheets['cells'][$i][4], -25569 * 86400 / 86400 + 25569);
+				$temp = date_create_from_format('d/m/Y', $sheets['cells'][$i][4]);
+				$data_excel[$i - 1]['tgl'] = date(date_format($temp, 'Y-m-d'));
 				$data_excel[$i - 1]['jam']   = $sheets['cells'][$i][5];
 				$data_excel[$i - 1]['sn_mesin'] = $sheets['cells'][$i][6];
 				$data_excel[$i - 1]['nm_mesin'] = $sheets['cells'][$i][7];
