@@ -249,4 +249,10 @@ class Hrd extends CI_Controller {
 
         $c_pdf->Output();
     }
+    public function hapusdata() {
+        $this->M_absensi->delete();
+        $this->header();
+        $data['absensi'] = $this->M_absensi->tampil_data()->result();
+        $this->load->view('hrd/data_absensi', $data);
+    }
 }

@@ -28,6 +28,7 @@
             </div>
             <!--End Modal-->
             <div class="module-head">
+                <a href="<?php echo base_url('index.php/hrd/hapusdata/'); ?>" id="tambah" style="margin-left: 10px"; class="btn btn-danger btn-fill pull-right" name="all" type="submit"><i class="menu-icon icon-trash"></i></a>   
                 <a id="tambah" class="btn btn-primary btn-fill pull-right" data-toggle="modal" data-target="#import"><i class="menu-icon icon-upload-alt"></i>&nbsp;&nbsp;Import</a>    
                 <h3>Data Karyawan PT.PYXIS 2019</h3>
                 <p class="category">* Data ini akan berubah sewaktu-waktu</p>

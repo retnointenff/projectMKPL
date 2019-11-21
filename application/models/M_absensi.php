@@ -43,4 +43,9 @@ class M_absensi extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+    public function delete(){
+        $this->db->from('absensi'); 
+        $this->db->truncate();
+        return ;
+    }
 }
