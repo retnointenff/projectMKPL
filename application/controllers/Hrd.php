@@ -8,6 +8,7 @@ class Hrd extends CI_Controller {
 		parent::__construct();		
         $this->load->model('M_karyawan');
         $this->load->model('M_absensi');
+        $this->load->model('M_cuti');
         $this->load->library('pdf');
         $this->load->helper('url');
     }
@@ -255,4 +256,23 @@ class Hrd extends CI_Controller {
         $data['absensi'] = $this->M_absensi->tampil_data()->result();
         $this->load->view('hrd/data_absensi', $data);
     }
+    public function cuti() {
+        $nik = $this->session->userdata('nik');
+        $data ['cuti'] = $this->M_cuti->getCuti($nik);
+        $this->header();
+        $this->load->view('izin_cuti', $data);
+    }
+    public function keluar(){
+        $nik = $this->session->userdata('nik');
+        $data ['keluar'] = $this->M_cuti->getKeluar($nik);
+        $this->header();
+        $this->load->view('izin_keluar', $data);
+    }
+    public function khusus(){
+        $nik = $this->session->userdata('nik');
+        $data ['khusus'] = $this->M_cuti->getKhusus($nik);
+        $this->header();
+        $this->load->view('izin_khusus', $data);
+    }
+    
 }
