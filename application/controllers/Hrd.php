@@ -113,4 +113,140 @@ class Hrd extends CI_Controller {
         $this->M_karyawan->deleteKaryawan($nik);
         redirect('hrd/karyawan');
     }
+    public function cetak_pdf($nik){
+        $data = $this->M_absensi->getCetak($nik);
+        $c_pdf = $this->pdf->getInstance();
+        $c_pdf->AliasNbPages();
+        $c_pdf = new FPDF('P', 'mm', 'A4');
+        $c_pdf->AddPage();
+        $c_pdf->header('Arial');
+        $c_pdf->setTopMargin(15);
+        $c_pdf->setLeftMargin(12);
+        $c_pdf->Cell(50);
+        $c_pdf->SetFont('Arial','B', 18);
+        $c_pdf->Cell(190,10,'PT. PYXIS ULTIMATE SOLUTION', 0,1, 'L');
+        $c_pdf->SetFont('Arial', 'B', 17);
+        $c_pdf->Cell(60);
+		$c_pdf->Cell(190,7, 'EVERYONES TECHNOLOGY', 0,1,'L');
+        $c_pdf->SetFont('Arial', 'B', 8);
+        $c_pdf->Cell(5);
+		$c_pdf->Cell(90,6, 'Jl.Tambora 15 Malang 05146, Ph.(62-341)550246 55028, Fax.(62-341)550247, E-mail:corporate@pyxis.net, Website:www.thepyxis.net',0,1, 'L');
+		$c_pdf->SetFont('Arial', 'B',7);
+        $c_pdf->Line(15, 35, 220-25, 35);
+        $c_pdf->Line(15, 35, 220-25, 35);
+        $c_pdf->Line(15, 35, 220-25, 35);
+        $c_pdf->Line(15, 35, 220-25, 35);
+
+        $c_pdf->Cell(10,8, '', 0,1);
+        $c_pdf->Cell(60);
+        $c_pdf->SetFont('Arial', 'B', 14);
+        $c_pdf->Cell(230,7,'Laporan Absensi Karyawan',0,1, 'L');
+        $c_pdf->Line(72, 47, 170-32, 47);
+
+        $c_pdf->Cell(10,8, '', 0,1);
+        $c_pdf->Cell(10);
+        $c_pdf->SetFont('Arial','', 12);
+            $c_pdf->Cell(25,5, 'NIK',0,0);  
+            $c_pdf->Cell(25,5, ': '. $data[0]->nik,0,0);
+                
+        $c_pdf->Cell(10,8, '', 0,1);
+        $c_pdf->Cell(10);
+        $c_pdf->SetFont('Arial', '', '12');
+            $c_pdf->Cell(25,5, 'Nama',0,0);  
+            $c_pdf->Cell(25,5, ': '. $data[0]->nama,0,0);
+           
+        $c_pdf->Cell(10,8, '', 0,1);
+        $c_pdf->Cell(10);
+        $c_pdf->SetFont('Arial', '', '12');
+            $c_pdf->Cell(25,5, 'Jabatan',0,0);  
+            $c_pdf->Cell(25,5, ': '. $data[0]->jabatan,0,0);
+             
+        $c_pdf->Cell(10,8, '', 0,1);
+        $c_pdf->Cell(10);
+        $c_pdf->SetFont('Arial', '', '12');
+            $c_pdf->Cell(25,5, 'Departemen',0,0);  
+            $c_pdf->Cell(25,5, ': '. $data[0]->departemen,0,0);
+        
+
+        $c_pdf->Line(15, 90, 220-25, 90);
+        $c_pdf->Line(15, 90, 220-25, 90);
+        $c_pdf->Line(15, 90, 220-25, 90);
+
+        $c_pdf->Cell(10,14, '', 0,1);
+        $c_pdf->Cell(60);
+        $c_pdf->SetFont('Arial', 'B', 14);
+        $c_pdf->Cell(230,7,'Detail Absensi Selama Sebulan',0,1, 'L');
+        $c_pdf->Line(72, 100, 170-24, 100);
+
+        $telatRaw = $data[0]->telat;
+        $c_pdf->Cell(10,8, '', 0,1);
+        $c_pdf->Cell(10);
+        $c_pdf->SetFont('Arial', '', '12');
+            $c_pdf->Cell(25,5, 'Total Telat',0,0);  
+            $c_pdf->Cell(25,5, ': '. $totalTelat = strval($telatRaw).' menit',0,0);      
+        $c_pdf->Cell(10,8, '', 0,1);
+        $c_pdf->Cell(10);
+        $c_pdf->SetFont('Arial', '', '12');
+            $c_pdf->Cell(25,5, 'Total Denda',0,0);  
+            $c_pdf->Cell(25,5, ': '. $totalDenda = "Rp. " . strval($telatRaw*1000),0,0);
+                
+        if ($telatRaw > 30) {
+            $sp = "Surat Peringatan 2";
+        } else if ($telatRaw >= 0 ) {
+            $sp = "Tidak Mendapat Surat Peringatan";
+        } else {
+            $sp = "Surat Peringatan 1";
+        }
+        $c_pdf->Cell(10,8, '', 0,1);
+        $c_pdf->Cell(10);
+        $c_pdf->SetFont('Arial', '', '12');
+            $c_pdf->Cell(25,5, 'Peringatan',0,0);  
+            $c_pdf->Cell(25,5, ': '. $sp,0,0);
+       
+        $c_pdf->Line(15, 138, 220-25, 138);
+        $c_pdf->Line(15, 138, 220-25, 138);
+        $c_pdf->Line(15, 138, 220-25, 138);
+
+        $c_pdf->Cell(10,14, '', 0,1);
+        $c_pdf->Cell(10);
+        $c_pdf->SetFont('Arial', '', '12');
+        $c_pdf->Cell(200,7, 'Keterangan     : ',0,1, 'L');
+
+        $c_pdf->Cell(10,8, '', 0,1);
+        $c_pdf->Line(15, 182, 220-25, 182);
+        $c_pdf->Line(15, 182, 220-25, 182);
+        $c_pdf->Line(15, 182, 220-25, 182);
+
+        $c_pdf->Cell(10,30, '', 0,1);
+        $c_pdf->Cell(10);
+        $c_pdf->SetFont('Arial', '', '12');
+        $c_pdf->Cell(200,7, 'Malang ...../ ..... / ..... ',0,1, 'L');
+        $c_pdf->Cell(10,15,'',0,1);
+        $c_pdf->Cell(10);
+        $c_pdf->SetFont('Arial','','10');
+       
+            $c_pdf->Cell(65,5, 'HRD MANAGER',0,0);  
+            $c_pdf->Cell(65,5, 'HEAD DEPT.',0,0);
+            $c_pdf->Cell(65,5, 'EMPLOYED CONCERNED',0,0);
+            
+        $c_pdf->Cell(10,40,'',0,1);
+        $c_pdf->Cell(10);
+        $c_pdf->SetFont('Arial','','12');
+            $c_pdf->Cell(62,5, '(................................)',0,0); 
+            $c_pdf->Cell(62,5, '(................................)',0,0);
+            $c_pdf->Cell(62,5, '(................................)',0,0);
+          
+        $c_pdf->Cell(0,0,'',0,1);
+        $c_pdf->Cell(10);
+        $c_pdf->SetFont('Arial','','12');
+        $c_pdf->Line(15, 258, 220-25, 258);
+        $c_pdf->Line(15, 258, 220-25, 258);
+        $c_pdf->Line(15, 258, 220-25, 258);
+        $c_pdf->Cell(10,16,'',0,1);
+        $c_pdf->Cell(60);
+        $c_pdf->SetFont('Arial','','12');
+        $c_pdf->Cell(200,7, '@copy 2019-www.pyxis.net',0,1, 'L');
+
+        $c_pdf->Output();
+    }
 }

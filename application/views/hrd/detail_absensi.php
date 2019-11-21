@@ -127,6 +127,29 @@
                             </td>
                         </tr>
                     </table>
+            <div class="" style="padding: 0 0 20px 25px">
+                <button class="btn btn-success btn-fill" data-toggle="modal" data-target="#cetakpdf">CETAK PDF&nbsp;&nbsp;<i class="menu-icon icon-print"></i></button>
+            </div>
+            
+            <!--Modal-->
+            <div class="modal fade" id="cetakpdf" tabindex="-1" role="dialog" aria-labelledby="myModaliLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModaliLabel">Cetak Ke PDF</h4>
+                        </div>
+                        <div class="modal-body">
+                            <b>Cetak Laporan PDF</b>
+                        </div>
+                        <div class="modal-footer">
+                            <a type="button" class="btn btn-danger btn-fill btn-sm" data-dismiss="modal"><i class="menu-icon icon-remove"></i>&nbsp;&nbsp;Close</a>
+                            <a href="<?php echo base_url('index.php/hrd/cetak_pdf/'.$row->nik); ?>" name="import" class="btn btn-success btn-fill btn-sm" target="_blank"><i class="menu-icon icon-print"></i>&nbsp;&nbsp;Cetak</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--End Modal--> 
                 </div>
             </form>   
             </div>

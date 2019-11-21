@@ -33,4 +33,14 @@ class M_absensi extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+    public function getCetak($nik){
+        $this->db->select('karyawan.nik,karyawan.nama,karyawan.jabatan,karyawan.departemen,absensi.telat');
+        $this->db->from('karyawan');
+        $this->db->JOIN('absensi', 'karyawan.nik = absensi.nik' );
+        $this->db->where('karyawan.nik', $nik);
+        $this->db->order_by('tgl', 'desc');
+        $this->db->limit(1);
+        $query = $this->db->get();
+        return $query->result();
+    }
 }
