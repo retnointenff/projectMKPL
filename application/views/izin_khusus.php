@@ -99,6 +99,7 @@
                             <th>Jam Izin</th>
                             <th>Jenis Izin</th>
                             <th>Keterangan</th>
+                            <th>Status</th>
                             <th colspan="2">Action</th>
                         </tr>
                     </thead>
@@ -111,7 +112,16 @@
                             <td><?php echo $khusus->jam ?></td>
                             <td><?php echo $khusus->jenis ?></td>
                             <td><?php echo $khusus->ket ?></td>
-							<td class="text-center"><a class='btn btn-danger btn-xs' href="<?php echo base_url('index.php/izin/deleteKhusus/' . $khusus->kd_izin); ?>"><span class="menu-icon icon-trash"></span></a></td>
+							<?php if($khusus->status == '0') { ?>
+								<td><b style="color:red;">Menunggu Konfirmasi</b></td>
+							<?php } else if($khusus->status == '1') {?>
+								<td><b style="color:blue;">Disetujui</b></td>
+							<?php }?>
+                            <?php if ($khusus->status == '0') {?>
+								<td class="text-center"><a class='btn btn-danger btn-xs' href="<?php echo base_url('index.php/izin/deleteKhusus/' . $khusus->kd_izin); ?>"><span class="menu-icon icon-trash"></span></a></td>
+							<?php } else if ($khusus->status == '1') {?>
+								<td>-</td>
+							<?php }?>
                         </tr>
 						<?php }?>
                     </tbody>

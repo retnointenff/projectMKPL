@@ -60,4 +60,39 @@ class M_cuti extends CI_Model
     {
         $this->db->delete('keluar', $id);
     }
+
+    public function get_by_role_cuti()
+    {
+        $this->db->select('karyawan.*, cuti.*');
+        $this->db->join('cuti','karyawan.nik = cuti.nik');
+        $this->db->from('karyawan');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function get_by_role_kh()
+    {
+        $this->db->select('karyawan.*, khusus.*');
+        $this->db->join('khusus','karyawan.nik = khusus.nik');
+        $this->db->from('karyawan');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+     public function get_by_role_ke()
+    {
+        $this->db->select('karyawan.*, keluar.*');
+        $this->db->join('keluar','karyawan.nik = keluar.nik');
+        $this->db->from('karyawan');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getUnapproveIzin()
+    {
+        $total = $this->db->query("SELECT (SELECT COUNT(*) FROM cuti WHERE status = 0) as cuti, (SELECT COUNT(*) FROM keluar WHERE status = 0) as keluar, (SELECT COUNT(*) FROM khusus WHERE status = 0) as khusus")->row_array();
+        $hasil = $total['cuti'] + $total['khusus'] + $total['keluar'];
+        return $hasil; 
+    }    
+
 }

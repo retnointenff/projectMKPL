@@ -76,6 +76,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <li class="active"><a href="<?php echo base_url('index.php/hrd'); ?>"><i class="menu-icon icon-dashboard"></i>Dashboard</a></li>
                                 <li><a href="<?php echo base_url('index.php/hrd/karyawan'); ?>"><i class="menu-icon icon-list-alt"></i>Data Karyawan</a></li>
                                 <li><a href="<?php echo base_url('index.php/hrd/absensi'); ?>"><i class="menu-icon icon-list-alt"></i>Data Absensi</a></li>
+                                <li><a href="<?php echo base_url('index.php/hrd/perizinan'); ?>"><i class="menu-icon icon-list-alt"></i>Perizinan <b class="label orange pull-right"><?= $izin;?></b></a></li>
                                 <li><a class="collapsed" data-toggle="collapse" href="#togglePages"><i class="menu-icon icon-cog">
                                 </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right">
                                 </i>Izin </a>

@@ -136,6 +136,7 @@
                             <th>Tanggal Cuti</th>
                             <th>Tanggal Masuk</th>
 							<th>Jenis Cuti</th>
+							<th>Status</th>
                             <th colspan="2">Action</th>
                         </tr>
                     </thead>
@@ -147,7 +148,16 @@
                             <td><?php echo $cuti->dari ?></td>
                             <td><?php echo $cuti->masuk ?></td>
 							<td><?php echo $cuti->jenis ?></td>
-							<td class="text-center"><a class='btn btn-danger btn-xs' href="<?php echo base_url('index.php/izin/deleteCuti/' . $cuti->kd_cuti);?>"><span class="menu-icon icon-trash"></span></a></td>
+							<?php if($cuti->status == '0') { ?>
+								<td><b style="color:red;">Menunggu Konfirmasi</b></td>
+							<?php } else if($cuti->status == '1') {?>
+								<td><b style="color:blue;">Disetujui</b></td>
+							<?php }?>
+							<?php if ($cuti->status == '0') {?>
+								<td class="text-center"><a class='btn btn-danger btn-xs' href="<?php echo base_url('index.php/izin/deleteCuti/' . $cuti->kd_cuti);?>"><span class="menu-icon icon-trash"></span></a></td>
+							<?php } else if ($cuti->status == '1') {?>
+								<td>-</td>
+							<?php }?>
 						</tr>
 						<?php }?>
                     </tbody>

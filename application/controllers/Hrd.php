@@ -13,7 +13,8 @@ class Hrd extends CI_Controller {
         $this->load->helper('url');
     }
     public function header() {
-        $this->load->view('header/header');
+        $data['izin'] = $this->M_cuti->getUnapproveIzin();
+        $this->load->view('header/header',$data);
     }
     public function index() {
         $telat = $this->M_absensi->tampilkan_data($this->session->userdata('nik'))->result();
@@ -274,5 +275,37 @@ class Hrd extends CI_Controller {
         $this->header();
         $this->load->view('izin_khusus', $data);
     }
-    
+    public function perizinan() {
+        $data['perizinan'] = $this->M_cuti->get_by_role_cuti();
+        $this->header();
+        $this->load->view('hrd/perizinan', $data);
+    }
+    public function perizinan_kh() {
+        $data['perizinan_kh'] = $this->M_cuti->get_by_role_kh();
+        $this->header();
+        $this->load->view('hrd/perizinan_kh', $data);
+    }
+    public function perizinan_ke() {
+        $data['perizinan_ke'] = $this->M_cuti->get_by_role_ke();
+        $this->header();
+        $this->load->view('hrd/perizinan_ke', $data);
+    }
+    public function aprove($kd) {
+        $data = array('status' => '1');
+        $where= array('kd_cuti' => $kd );
+        $this->M_karyawan->updateAkun($where, $data, 'cuti');
+        redirect('hrd/perizinan');
+    }
+    public function aprove2($kd) {
+        $data = array('status' => '1');
+        $where= array('kd_izin' => $kd );
+        $this->M_karyawan->updateAkun($where, $data, 'khusus');
+        redirect('hrd/perizinan_kh');
+    }
+    public function aprove3($kd) {
+        $data = array('status' => '1');
+        $where= array('kd_keluar' => $kd );
+        $this->M_karyawan->updateAkun($where, $data, 'keluar');
+        redirect('hrd/perizinan_ke');
+    }
 }
