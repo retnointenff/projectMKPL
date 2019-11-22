@@ -122,7 +122,11 @@
 							<?php } else if ($khusus->status == '1') {?>
 								<td>-</td>
 							<?php }?>
+<<<<<<< HEAD
                         </tr>
+=======
+						</tr>
+>>>>>>> eb3ab13216d08f14cf2e98f1d5598af640c5befe
 						<?php }?>
                     </tbody>
                 </table>
