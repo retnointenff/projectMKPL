@@ -106,6 +106,7 @@
                             <th>Jam Keluar</th>
                             <th>Jam Kembali</th>
                             <th>Keterangan</th>
+							<th>Status</th>
                             <th colspan="2">Action</th>
                         </tr>
                     </thead>
@@ -119,8 +120,17 @@
                             <td><?php echo $keluar->keluar ?></td>
                             <td><?php echo $keluar->kembali ?></td>
                             <td><?php echo $keluar->ket ?></td>
-							<td class="text-center"><a class='btn btn-danger btn-xs' href="<?php echo base_url('index.php/izin/deleteKeluar/' . $keluar->kd_keluar); ?>"><span class="menu-icon icon-trash"></span></a></td>
-                        </tr>
+							<?php if($keluar->status == '0') { ?>
+								<td><b style="color:red;">Menunggu Konfirmasi</b></td>
+							<?php } else if($keluar->status == '1') {?>
+								<td><b style="color:blue;">Disetujui</b></td>
+							<?php }?>
+                            <?php if($keluar->status == '0') {?>
+								<td class="text-center"><a class='btn btn-danger btn-xs' href="<?php echo base_url('index.php/izin/deleteKeluar/' . $keluar->kd_keluar); ?>"><span class="menu-icon icon-trash"></span></a></td>
+							<?php } else if ($keluar->status == '1') {?>
+								<td>-</td>
+							<?php }?>
+						</tr>
 						<?php }?>
                     </tbody>
                 </table>
