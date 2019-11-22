@@ -6,16 +6,16 @@
                 $id = 1;
             ?>
 			<div class="module-head">
-			    <h3>Form Izin Khusus</h3>
+			    <h3>Form Izin Keluar</h3>
 			</div>
 			<div class="module-body">
-                <form class="form-horizontal row-fluid"  action="<?php echo base_url('index.php/izin/khusus'); ?>" method="post" >
+                <form class="form-horizontal row-fluid"  action="<?php echo base_url('index.php/izin/keluar'); ?>" method="post" >
 				    <div class="control-group">
 					    <label class="control-label" for="basicinput">Kode Izin</label>
-						<div class="controls">
+					    <div class="controls">
 						    <div class="input-prepend">
-							    <input class="span8" type="text" name="kd_izin" placeholder="KH000".$id value="<?php echo "KH000" . $id++ ?>" readonly>
-							</div>
+							    <input class="span8" type="text" name="kd_keluar" placeholder="K000".$id value="<?php echo "K000" . $id++ ?>" readonly>
+                            </div>
 						</div>
 					</div>
                     <div class="control-group">
@@ -48,26 +48,32 @@
 					    <label class="control-label" for="basicinput">Jenis Izin</label>
 						<div class="controls">
 						    <select tabindex="1" name="jenis" data-placeholder="Pilih Izin" class="span8">
-							    <option value="tidak masuk">Tidak Masuk</option>
-								<option value="terlambat">Terlambat</option>
-								<option value="pulang awal">Pulang Awal</option>
-                                <option value="lain-lain">Lain-lain</option>
+							    <option value="pribadi">Pribadi</option>
+								<option value="tugas kantor">Tugas Kantor</option>
 							</select>
 						</div>
 					</div>
                     <div class="control-group">
-					    <label class="control-label" for="basicinput">Tanggal Izin</label>
+					    <label class="control-label" for="basicinput">Waktu Izin</label>
 						<div class="controls">
 						    <div class="input-prepend">
-							    <input type="date" required name="tgl" class="span"><span class="add-on menu-icon icon-calendar"></span>
+							    <input type="text" value="<?php $dt = new DateTime(null, new DateTimeZone('Asia/Jakarta')); echo $dt->format('Y-m-d H:i:s a');?>" name="tgl" class="span" readonly><span class="add-on menu-icon icon-calendar"></span>
 							</div>
 						</div>
 					</div>
                     <div class="control-group">
-					    <label class="control-label" for="basicinput">Jam Izin</label>
+					    <label class="control-label" for="basicinput">Jam Keluar</label>
 						<div class="controls">
 						    <div class="input-prepend">
-							    <input type="time" required name="jam" class="span"><span class="add-on menu-icon icon-time"></span>
+							    <input type="time" required name="keluar" class="span"><span class="add-on menu-icon icon-time"></span>
+							</div>
+						</div>
+					</div>
+                    <div class="control-group">
+					    <label class="control-label" for="basicinput">Jam Kembali</label>
+						<div class="controls">
+						    <div class="input-prepend">
+							    <input type="time" required name="kembali" class="span"><span class="add-on menu-icon icon-time"></span>
 							</div>
 						</div>
 					</div>
@@ -96,33 +102,35 @@
                             <th>No</th>
                             <th>Nama</th>
                             <th>Tanggal Izin</th>
-                            <th>Jam Izin</th>
                             <th>Jenis Izin</th>
+                            <th>Jam Keluar</th>
+                            <th>Jam Kembali</th>
                             <th>Keterangan</th>
                             <th>Status</th>
                             <th colspan="2">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $no = 1;foreach ($khusus as $khusus) {?>
+                        <?php $no = 1;foreach ($keluar as $keluar) { ?>
                         <tr class="odd gradeX">
                             <td><?php echo $no++ ?></td>
-                            <td><?php echo $khusus->nama ?></td>
-                            <td><?php echo $khusus->tgl ?></td>
-                            <td><?php echo $khusus->jam ?></td>
-                            <td><?php echo $khusus->jenis ?></td>
-                            <td><?php echo $khusus->ket ?></td>
-							<?php if($khusus->status == '0') { ?>
+                            <td><?php echo $keluar->nama ?></td>
+                            <td><?php echo $keluar->tgl ?></td>
+                            <td><?php echo $keluar->jenis ?></td>
+                            <td><?php echo $keluar->keluar ?></td>
+                            <td><?php echo $keluar->kembali ?></td>
+                            <td><?php echo $keluar->ket ?></td>
+							<?php if($keluar->status == '0') { ?>
 								<td><b style="color:red;">Menunggu Konfirmasi</b></td>
-							<?php } else if($khusus->status == '1') {?>
+							<?php } else if($keluar->status == '1') {?>
 								<td><b style="color:blue;">Disetujui</b></td>
 							<?php }?>
-                            <?php if ($khusus->status == '0') {?>
-								<td class="text-center"><a class='btn btn-danger btn-xs' href="<?php echo base_url('index.php/izin/deleteKhusus/' . $khusus->kd_izin); ?>"><span class="menu-icon icon-trash"></span></a></td>
-							<?php } else if ($khusus->status == '1') {?>
+                            <?php if($keluar->status == '0') {?>
+								<td class="text-center"><a class='btn btn-danger btn-xs' href="<?php echo base_url('index.php/izin/deleteKeluar/' . $keluar->kd_keluar); ?>"><span class="menu-icon icon-trash"></span></a></td>
+							<?php } else if ($keluar->status == '1') {?>
 								<td>-</td>
 							<?php }?>
-						</tr>
+                        </tr>
 						<?php }?>
                     </tbody>
                 </table>
@@ -130,7 +138,7 @@
         </div> <!--/.module-->
     </div> <!--/.content-->
 </div> <!--/.span9-->
-</div>
+</div> <!--/.row-->
 </div> <!--/.container-->
 </div> <!--/.wrapper-->
 </body>
