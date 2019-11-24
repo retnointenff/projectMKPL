@@ -22,4 +22,12 @@ class M_gaji extends CI_Model
         $hasil = $this->db->query("SELECT SUM(total-jamsostek-bpjs-koperasi-denda-cuti) as take FROM gaji WHERE nik = " . $nik);
         return $hasil->row_array();
     }
+    public function getDataPdf($nik){
+        $this->db->select('karyawan.nik, karyawan.nama');
+        $this->db->from('karyawan');
+        $this->db->where('karyawan.nik', $nik);
+        $this->db->limit(1);
+        $query = $this->db->get();
+        return $query->result();
+    }
 }
