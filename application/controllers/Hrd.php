@@ -8,11 +8,14 @@ class Hrd extends CI_Controller {
 		parent::__construct();		
         $this->load->model('M_karyawan');
         $this->load->model('M_absensi');
+        $this->load->model('M_cuti');
         $this->load->library('pdf');
         $this->load->helper('url');
+        $this->load->model('M_gaji');
     }
     public function header() {
-        $this->load->view('header/header');
+        $data['izin'] = $this->M_cuti->getUnapproveIzin();
+        $this->load->view('header/header',$data);
     }
     public function index() {
         $telat = $this->M_absensi->tampilkan_data($this->session->userdata('nik'))->result();
@@ -255,4 +258,75 @@ class Hrd extends CI_Controller {
         $data['absensi'] = $this->M_absensi->tampil_data()->result();
         $this->load->view('hrd/data_absensi', $data);
     }
+    public function cuti() {
+        $nik = $this->session->userdata('nik');
+        $data ['cuti'] = $this->M_cuti->getCuti($nik);
+        $this->header();
+        $this->load->view('izin_cuti', $data);
+    }
+    public function keluar(){
+        $nik = $this->session->userdata('nik');
+        $data ['keluar'] = $this->M_cuti->getKeluar($nik);
+        $this->header();
+        $this->load->view('izin_keluar', $data);
+    }
+    public function khusus(){
+        $nik = $this->session->userdata('nik');
+        $data ['khusus'] = $this->M_cuti->getKhusus($nik);
+        $this->header();
+        $this->load->view('izin_khusus', $data);
+    }
+    public function perizinan() {
+        $data['perizinan'] = $this->M_cuti->get_by_role_cuti();
+        $this->header();
+        $this->load->view('hrd/perizinan', $data);
+    }
+    public function perizinan_kh() {
+        $data['perizinan_kh'] = $this->M_cuti->get_by_role_kh();
+        $this->header();
+        $this->load->view('hrd/perizinan_kh', $data);
+    }
+    public function perizinan_ke() {
+        $data['perizinan_ke'] = $this->M_cuti->get_by_role_ke();
+        $this->header();
+        $this->load->view('hrd/perizinan_ke', $data);
+    }
+    public function aprove($kd) {
+        $data = array('status' => '1');
+        $where= array('kd_cuti' => $kd );
+        $this->M_karyawan->updateAkun($where, $data, 'cuti');
+        redirect('hrd/perizinan');
+    }
+    public function aprove2($kd) {
+        $data = array('status' => '1');
+        $where= array('kd_izin' => $kd );
+        $this->M_karyawan->updateAkun($where, $data, 'khusus');
+        redirect('hrd/perizinan_kh');
+    }
+    public function aprove3($kd) {
+        $data = array('status' => '1');
+        $where= array('kd_keluar' => $kd );
+        $this->M_karyawan->updateAkun($where, $data, 'keluar');
+        redirect('hrd/perizinan_ke');
+    }
+
+    public function penggajian() {
+        $kry = $this->M_karyawan->getData()->result();
+        foreach ($kry as $kry) {
+            $where = array('nik' => $kry->nik);
+            if ($kry->grade == 'A') {
+                $gaji = 5000000;
+            } elseif ($kry->grade == 'B') {
+                $gaji = 3500000;
+            } else {
+                $gaji = 2000000;
+            }
+            $gajiKry = array('gaji' => $gaji);
+            $this->M_gaji->updateGaji($gajiKry, $where);
+        }
+        $data['karyawan'] = $this->M_karyawan->getData()->result();
+        $this->header();
+        $this->load->view('hrd/penggajian', $data);
+    }
+
 }

@@ -52,8 +52,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="span3">
                         <div class="sidebar">
                             <ul class="widget widget-menu unstyled">
-                                <li class="active"><a href="<?php echo base_url('index.php/karyawan');?>"><i class="menu-icon icon-dashboard"></i>Dashboard</a></li>
-                                
+                                <li class="active"><a href="<?php echo base_url('index.php/karyawan');?>"><i class="menu-icon icon-dashboard"></i>Dashboard</a></li>    
                                 <li><a href="<?php echo base_url('index.php/karyawan/absensi'); ?>"><i class="menu-icon icon-list-alt"></i>Laporan Absensi</a></li>
+                                <li><a class="collapsed" data-toggle="collapse" href="#togglePages"><i class="menu-icon icon-cog">
+                                </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right">
+                                </i>Izin </a>
+                                    <ul id="togglePages" class="collapse unstyled">
+                                        <li><a href="<?php echo base_url('index.php/karyawan/cuti'); ?>"><i class="icon-inbox"></i>Cuti </a></li>
+                                        <li><a href="<?php echo base_url('index.php/karyawan/keluar'); ?>"><i class="icon-inbox"></i>Keluar</a></li>
+                                        <li><a href="<?php echo base_url('index.php/karyawan/khusus'); ?>"><i class="icon-inbox"></i>Khusus</a></li>
+                                    </ul>
+                                </li>
                         </div>
                     </div>

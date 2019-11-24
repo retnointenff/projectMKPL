@@ -8,6 +8,7 @@ class Karyawan extends CI_Controller {
 		parent::__construct();		
         $this->load->model('M_karyawan');
         $this->load->model('M_absensi');
+        $this->load->model('M_cuti');
         $this->load->library('pdf');
         $this->load->helper('url');
     }
@@ -65,5 +66,24 @@ class Karyawan extends CI_Controller {
         $where= array('nik' => $nik );
         $this->M_karyawan->updateAkun($where, $data, 'karyawan');
         redirect('karyawan/edit_profil');
+    }
+    public function cuti() {
+        $nik = $this->session->userdata('nik');
+        $data['cuti'] = $this->M_cuti->getCuti($nik);
+        $data['karyawan'] = $this->M_karyawan->getData()->result();
+        $this->header();
+        $this->load->view('izin_cuti', $data);
+    }
+    public function keluar() {
+        $nik = $this->session->userdata('nik');
+        $data['keluar'] = $this->M_cuti->getKeluar($nik);
+        $this->header();
+        $this->load->view('izin_keluar', $data);
+    }
+    public function khusus() {
+        $nik = $this->session->userdata('nik');
+        $data['khusus'] = $this->M_cuti->getKhusus($nik);
+        $this->header();
+        $this->load->view('izin_khusus', $data);
     }
 }
