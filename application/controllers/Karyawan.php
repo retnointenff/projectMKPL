@@ -59,7 +59,7 @@ class Karyawan extends CI_Controller {
             'alamat' => $alamat,
             'tempat' => $tempat,
             'tgl_lahir' => $tgl_lahir,
-            'password' => $password,
+            'pin' => $password,
             'phone' => $phone
         );
         $where= array('nik' => $nik );
