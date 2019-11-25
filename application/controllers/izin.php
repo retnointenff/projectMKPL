@@ -10,7 +10,8 @@ class Izin extends CI_Controller {
     }
     public function header(){
         if ($this->session->userdata('jabatan')== 'HRD'){
-            $this->load->view('header/header');
+            $data['izin'] = $this->M_cuti->getUnapproveIzin();
+            $this->load->view('header/header',$data);
         }elseif ($this->session->userdata('koperasi') == 'Anggota'){
             $this->load->view('header/headerK');
         }
