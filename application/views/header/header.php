@@ -86,6 +86,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <li><a href="<?php echo base_url('index.php/hrd/khusus'); ?>"><i class="icon-inbox"></i>Khusus</a></li>
                                     </ul>
                                 </li>
+                                <li><a href="<?php echo base_url('index.php/hrd/penggajian'); ?>"><i class="menu-icon icon-list-alt"></i>Penggajian</a></li>
                             </ul>
                         </div>
                     </div>                        

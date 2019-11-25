@@ -11,6 +11,7 @@ class Hrd extends CI_Controller {
         $this->load->model('M_cuti');
         $this->load->library('pdf');
         $this->load->helper('url');
+        $this->load->model('M_gaji');
     }
     public function header() {
         $data['izin'] = $this->M_cuti->getUnapproveIzin();
@@ -64,7 +65,7 @@ class Hrd extends CI_Controller {
             'alamat' => $alamat,
             'tempat' => $tempat,
             'tgl_lahir' => $tgl_lahir,
-            'password' => $password,
+            'pin' => $password,
             'phone' => $phone
         );
         $where= array('nik' => $nik );
@@ -308,4 +309,24 @@ class Hrd extends CI_Controller {
         $this->M_karyawan->updateAkun($where, $data, 'keluar');
         redirect('hrd/perizinan_ke');
     }
+
+    public function penggajian() {
+        $kry = $this->M_karyawan->getData()->result();
+        foreach ($kry as $kry) {
+            $where = array('nik' => $kry->nik);
+            if ($kry->grade == 'A') {
+                $gaji = 5000000;
+            } elseif ($kry->grade == 'B') {
+                $gaji = 3500000;
+            } else {
+                $gaji = 2000000;
+            }
+            $gajiKry = array('gaji' => $gaji);
+            $this->M_gaji->updateGaji($gajiKry, $where);
+        }
+        $data['karyawan'] = $this->M_karyawan->getData()->result();
+        $this->header();
+        $this->load->view('hrd/penggajian', $data);
+    }
+
 }
